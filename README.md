@@ -1,4 +1,4 @@
-# 泛微OA-E-cology-rce
+# 泛微OA Ecology-rce
 泛微OA ecology rce
 # 用法
 - python fanwei_rce.py -u http://127.0.0.1
