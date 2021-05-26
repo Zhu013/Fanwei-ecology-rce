@@ -1,6 +1,8 @@
 # 泛微OA Ecology-rce
 泛微OA ecology rce
 # 用法
+![image](https://github.com/Zhu013/Fanwei-ecology-rce/blob/main/useage.gif)
+
 - python fanwei_rce.py -u http://127.0.0.1
 单目标
 - python fanwei_rce.py -f url.txt
